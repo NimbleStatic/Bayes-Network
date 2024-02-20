@@ -16,15 +16,11 @@
         NodeState(any state)
 
     }
-    class PropabilityRepresantation{
-        +int propability_counter
-        + NodeState outcome_state
 
-        update_propability(int weight)
 
-    }
+    
     class PropabilityCounter{
-        vector<PropabilityRepresantation> possible_states
+        map<NodeState, int> outcome_state_map
         set_propabilities(vector<NodeState,float> new_propabilities, int weight)
         update_propability(NodeState, int weight)
         get_propability(NodeState)
