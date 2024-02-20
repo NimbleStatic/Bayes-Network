@@ -44,9 +44,8 @@
     note "propabilities are represented by int" as n1
     
     
-    n1 --> PropabilityRepresantation
-    NodeState ----> PropabilityRepresantation
-    PropabilityRepresantation ---> PropabilityCounter
+    n1 -->PropabilityCounter
+    NodeState ---->PropabilityCounter
     PropabilityCounter -->NodePropabilityTable
     
 

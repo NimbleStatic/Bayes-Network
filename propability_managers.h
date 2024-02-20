@@ -3,6 +3,7 @@
 #include <node_building_blocks.h>
 #include <memory>
 #include <map>
+#include <vector>
 
 // class PropabilityRepresantation
 // {
@@ -21,6 +22,29 @@
 class PropabilityCounter
 {
 private:
-    std::map<NodeState, unsigned int> outcome_propability_counts;
-}
+    std::map<std::shared_ptr<NodeState>, unsigned int> outcome_propability_counts;
+    std::vector<std::shared_ptr<NodeState>> possible_states;
+
+    unsigned int _get_full_count();
+
+public:
+    void set_propability(std::shared_ptr<NodeState> state, float propability, unsigned int const_multiplier);
+    void update_propability(std::shared_ptr<NodeState> state, float propability, unsigned int const_multiplier);
+    void update_propability(unsigned int weight);
+    void update_propability();
+    float get_propability(std::shared_ptr<NodeState> state);
+    std::vector<float> get_propabilities(std::vector<std::shared_ptr<NodeState>> states);
+    std::shared_ptr<NodeState> choose_state();
+
+    bool add_state(std::shared_ptr<NodeState> new_state);
+    void add_states(std::vector<std::shared_ptr<NodeState>> possible_states);
+    bool delete_state(std::shared_ptr<NodeState> new_state);
+    void delete_states(std::vector<std::shared_ptr<NodeState>> possible_states);
+};
+
+class NodePropabilityTable
+{
+private:
+public:
+};
 #endif
