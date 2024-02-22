@@ -3,17 +3,15 @@
 
 #include <string>
 
-class NodeID
+class ObjectID
 {
 private:
-    unsigned int node_id;
+    static unsigned int ids_created;
+    unsigned int id;
 
 public:
-    NodeID();
+    ObjectID();
     unsigned int get_id();
-
-protected:
-    unsigned int object_counter;
 };
 
 class NodeState
@@ -23,15 +21,12 @@ private:
     std::string state_description;
 
 public:
-    // 0 is always undefined
+    NodeState(unsigned int state_nr, std::string state_description);
+    NodeState();
     void set_description(std::string state_description);
     void set_state_nr(unsigned int state_nr);
-    // return 0 if undefined
     unsigned int get_state_nr();
     std::string get_description();
-    bool is_undefined();
-    void set_undefined();
-    // state_nr == 0 --> undefined
 };
 
 #endif

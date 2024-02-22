@@ -10,7 +10,6 @@
     class NodeState{
         -int node_state
         -str state_description
-        -bool is_none_state
         get_state()
         NodeState()
         NodeState(any state)
@@ -53,6 +52,8 @@
         + NodeId id
         - vector<NodeId> parent_nodes
         - vector<NodeState> possible_states
+        -NodeState current_state
+        -bool is_undefined
         NodePropabilityTable node_propabilities
         add_parent(NodeId)
         delete_parent(NodeId)
