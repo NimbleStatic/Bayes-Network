@@ -13,21 +13,23 @@ unsigned int ObjectID::get_id()
     return id;
 };
 
-NodeState::NodeState(unsigned int state_nr, std::string state_description)
+NodeState::NodeState(unsigned int state_nr, std::string state_description) : state_nr(state_nr), state_description(state_description)
 {
 }
-NodeState::NodeState()
-{
-}
+
 void NodeState::set_description(std::string state_description)
 {
+    this->state_description = state_description;
 }
 void NodeState::set_state_nr(unsigned int state_nr)
 {
+    this->state_nr = state_nr;
 }
 unsigned int NodeState::get_state_nr()
 {
+    return state_nr;
 }
 std::string NodeState::get_description()
 {
+    return state_description;
 }
