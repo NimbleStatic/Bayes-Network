@@ -158,7 +158,7 @@ std::string PropabilityCounter::get_description() const
     for (const auto key_val : outcome_propability_counts)
     {
         std::shared_ptr<NodeState> state = key_val.first;
-        oss << state->get_string() << " - count:" << key_val.second;
+        oss << state->get_string_representation() << " - count:" << key_val.second;
         oss << ", propability:" << get_propability(state) << std::endl;
     };
     return oss.str();

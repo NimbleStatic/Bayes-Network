@@ -40,7 +40,7 @@ std::string NodeState::get_description() const
     return state_description;
 }
 
-std::string NodeState::get_string() const
+std::string NodeState::get_string_representation() const
 {
     std::string str;
     str += "N" + std::to_string(node_id.get_id()) + " ";

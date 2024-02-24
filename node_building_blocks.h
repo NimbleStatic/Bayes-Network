@@ -29,7 +29,7 @@ public:
     unsigned int get_node_id() const;
     unsigned int get_state_nr() const;
     std::string get_description() const;
-    std::string get_string() const;
+    std::string get_string_representation() const;
 
     bool operator==(const NodeState other) const;
 };
