@@ -2,7 +2,7 @@
 
 #include <string>
 #include "node_building_blocks.h"
-#include "propability_managers.h"
+#include "propability_counter.h"
 #include <memory>
 
 int main()
