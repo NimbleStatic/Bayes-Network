@@ -8,7 +8,6 @@
 #include <algorithm>
 #include <string>
 #include <sstream>
-using NStatePtr = std::shared_ptr<NodeState>;
 
 unsigned int PropabilityCounter::_get_full_count() const
 {
@@ -20,9 +19,9 @@ unsigned int PropabilityCounter::_get_full_count() const
     return full_count;
 }
 
-bool PropabilityCounter::_is_state_in_system(NStatePtr state) const
+bool PropabilityCounter::_is_state_in_system(std::shared_ptr<NodeState> state) const
 {
-    for (NStatePtr system_state : possible_states)
+    for (std::shared_ptr<NodeState> system_state : possible_states)
     {
         if (*system_state == *state)
         {
@@ -32,35 +31,33 @@ bool PropabilityCounter::_is_state_in_system(NStatePtr state) const
     return false;
 }
 
-PropabilityCounter::PropabilityCounter(std::vector<NStatePtr> states)
+PropabilityCounter::PropabilityCounter(std::vector<std::shared_ptr<NodeState>> states)
 {
     add_states(states);
-}
+};
 
-PropabilityCounter::PropabilityCounter()
-{
-}
+PropabilityCounter::PropabilityCounter(){};
 
-void PropabilityCounter::set_propability(NStatePtr state, float propability, unsigned int const_multiplier)
+void PropabilityCounter::set_propability(std::shared_ptr<NodeState> state, float propability, unsigned int const_multiplier)
 {
     unsigned int weight = std::round((propability * const_multiplier));
     outcome_propability_counts[state] = weight;
 }
-void PropabilityCounter::update_propability(NStatePtr state, float propability, unsigned int const_multiplier)
+void PropabilityCounter::update_propability(std::shared_ptr<NodeState> state, float propability, unsigned int const_multiplier)
 {
     unsigned int weight = std::round((propability * const_multiplier));
     update_propability(state, weight);
 }
-void PropabilityCounter::update_propability(NStatePtr state, unsigned int weight)
+void PropabilityCounter::update_propability(std::shared_ptr<NodeState> state, unsigned int weight)
 {
     outcome_propability_counts[state] += weight;
 }
-void PropabilityCounter::update_propability(NStatePtr state)
+void PropabilityCounter::update_propability(std::shared_ptr<NodeState> state)
 {
     update_propability(state, 1);
 }
 
-float PropabilityCounter::get_propability(NStatePtr state) const
+float PropabilityCounter::get_propability(std::shared_ptr<NodeState> state) const
 {
     unsigned int prob_counter;
     auto it = outcome_propability_counts.find(state);
@@ -77,16 +74,16 @@ float PropabilityCounter::get_propability(NStatePtr state) const
     float prob = static_cast<float>(prob_counter) / static_cast<float>(all_counts);
     return prob;
 }
-std::vector<float> PropabilityCounter::get_propabilities(std::vector<NStatePtr> states) const
+std::vector<float> PropabilityCounter::get_propabilities(std::vector<std::shared_ptr<NodeState>> states) const
 {
     std::vector<float> propabilities;
-    for (NStatePtr state : states)
+    for (std::shared_ptr<NodeState> state : states)
     {
         propabilities.push_back(get_propability(state));
     };
     return propabilities;
 }
-NStatePtr PropabilityCounter::choose_state() const
+std::shared_ptr<NodeState> PropabilityCounter::choose_state() const
 {
 
     std::vector<float> propabilities = get_propabilities(possible_states);
@@ -96,11 +93,11 @@ NStatePtr PropabilityCounter::choose_state() const
     std::discrete_distribution<int> prop_distribution(propabilities.begin(), propabilities.end());
 
     std::size_t rand_ind = prop_distribution(gen);
-    NStatePtr rand_state = possible_states[rand_ind];
+    std::shared_ptr<NodeState> rand_state = possible_states[rand_ind];
     return rand_state;
 }
 
-bool PropabilityCounter::add_state(NStatePtr new_state, unsigned int state_count)
+bool PropabilityCounter::add_state(std::shared_ptr<NodeState> new_state, unsigned int state_count)
 {
     if (!_is_state_in_system(new_state))
     {
@@ -110,18 +107,18 @@ bool PropabilityCounter::add_state(NStatePtr new_state, unsigned int state_count
     };
     return false;
 }
-bool PropabilityCounter::add_state(NStatePtr new_state)
+bool PropabilityCounter::add_state(std::shared_ptr<NodeState> new_state)
 {
     return add_state(new_state, 1);
 }
-void PropabilityCounter::add_states(std::vector<NStatePtr> new_states)
+void PropabilityCounter::add_states(std::vector<std::shared_ptr<NodeState>> new_states)
 {
-    for (NStatePtr state : new_states)
+    for (std::shared_ptr<NodeState> state : new_states)
     {
         add_state(state);
     };
 }
-bool PropabilityCounter::delete_state(NStatePtr state)
+bool PropabilityCounter::delete_state(std::shared_ptr<NodeState> state)
 {
     if (_is_state_in_system(state))
     {
@@ -145,9 +142,9 @@ bool PropabilityCounter::delete_state(NStatePtr state)
     }
     return false;
 }
-void PropabilityCounter::delete_states(std::vector<NStatePtr> states)
+void PropabilityCounter::delete_states(std::vector<std::shared_ptr<NodeState>> states)
 {
-    for (NStatePtr state : states)
+    for (std::shared_ptr<NodeState> state : states)
     {
         delete_state(state);
     };
@@ -158,7 +155,7 @@ std::string PropabilityCounter::get_description() const
     std::ostringstream oss;
     for (const auto key_val : outcome_propability_counts)
     {
-        NStatePtr state = key_val.first;
+        std::shared_ptr<NodeState> state = key_val.first;
         oss << state->get_string_representation() << " - count:" << key_val.second;
         oss << ", propability:" << get_propability(state) << std::endl;
     };
