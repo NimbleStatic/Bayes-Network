@@ -14,9 +14,9 @@ int main()
     std::cout << "ObjectID 2 ID: " << objId2.get_id() << std::endl;
 
     // Testing NodeState
-    NodeState state1(1, "State One");
-    NodeState state2(2, "State Two");
-    NodeState state3(3, "State Three");
+    NodeState state1(1, "State One", objId1);
+    NodeState state2(2, "State Two", objId2);
+    NodeState state3(3, "State Three", objId1);
 
     std::cout << "State 1 - Number: " << state1.get_state_nr() << ", Description: " << state1.get_description() << std::endl;
     std::cout << "State 2 - Number: " << state2.get_state_nr() << ", Description: " << state2.get_description() << std::endl;
@@ -36,6 +36,12 @@ int main()
     std::cout << my_count.get_description() << std::endl;
 
     my_count.add_states(state_vec);
+    std::cout << my_count.get_description() << std::endl;
+
+    my_count.delete_state(ptr3);
+    std::cout << my_count.get_description() << std::endl;
+
+    my_count.delete_state(ptr3);
     std::cout << my_count.get_description() << std::endl;
 
     return 0;
