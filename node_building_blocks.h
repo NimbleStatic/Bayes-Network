@@ -34,4 +34,4 @@ public:
     bool operator==(const NodeState other) const;
 };
 
-#endif
+#endif;

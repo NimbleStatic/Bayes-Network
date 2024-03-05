@@ -24,6 +24,6 @@ public:
     void add_possible_state(NodeState new_state);
     bool del_parent_node(std::shared_ptr<Node> const);
     void del_possible_state(NodeState new_state);
-}
+};
 
-#endif
+#endif;
